@@ -1,0 +1,58 @@
+.cards {
+  margin-top: 51px;
+}
+
+.card {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 10px;
+}
+
+.card__list {
+  display: grid;
+  list-style: none;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, 282px);
+  grid-gap: 20px 17px;
+  margin: 0;
+  padding: 0;
+}
+
+.card__image {
+  width: 282px;
+  height: 282px;
+  border-radius: 10px 10px 0 0;
+}
+
+.card__discription {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+  background-color: white;
+  padding: 25px 20px 25px;
+  border-radius: 0 0 10px 10px;
+}
+
+.card__title {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.21;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.card__like-button {
+  background: transparent url(../images/heart\ inactive.svg) center no-repeat;
+  width: 21px;
+  height: 18px;
+  border: none;
+}
+
+.card__like-button:hover {
+  opacity: 50%;
+  cursor: pointer;
+}
