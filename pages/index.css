@@ -23,7 +23,7 @@
     font-family: Inter, Arial, Helvetica, sans-serif;
     font-size: 17px;
     font-weight: 400;
-    line-height: 1.58px;
+    line-height: 1.58;
     margin: 0;
   }
   .profile__add-button {
@@ -64,7 +64,6 @@
   .profile__info {
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
     justify-content: center;
   }
   .profile__add-button {
