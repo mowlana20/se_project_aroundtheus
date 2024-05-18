@@ -14,6 +14,10 @@ This project is made so all the elements are displayed correctly on popular scre
 
 - [Link to the project on Figma](https://www.figma.com/file/ii4xxsJ0ghevUOcssTlHZv/Sprint-3%3A-Around-the-US?node-id=0%3A1)
 
+**project**
+
+- [Link to the project on github](https://github.com/mowlana20/se_project_aroundtheus)
+
 **vedio**
 
 - [Link to the project vedio on youtube](https://youtu.be/4Gy2_Aomqng)
