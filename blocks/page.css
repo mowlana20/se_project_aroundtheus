@@ -1,3 +1,5 @@
+/* pages section */
+
 .page {
   background-color: black;
   color: white;
@@ -20,5 +22,15 @@
 @media screen and (max-width: 920px) {
   .page {
     padding: 0 20px 0;
+  }
+}
+@media screen and (max-width: 620px) {
+  .page {
+    padding: 0 19px 0;
+  }
+}
+@media screen and (max-width: 580px) {
+  .page {
+    padding: 0;
   }
 }
