@@ -16,6 +16,10 @@ This project is made so all the elements are displayed correctly on popular scre
 
 **project**
 
+project name is Around The U.S.
+its a project that shows the location that the explorer went
+we used different technologies like flex grid and flex box to make his project.
+
 - [Link to the project on github](https://github.com/mowlana20/se_project_aroundtheus)
 
 **vedio**

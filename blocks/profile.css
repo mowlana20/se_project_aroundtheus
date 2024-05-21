@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
 }
-.Profile__image {
+.profile__image {
   height: 120px;
   width: 120px;
   border-radius: 50%;
@@ -68,7 +68,7 @@
   width: 150px;
   margin-left: auto;
   border: solid 2px white;
-  border-radius: 2%;
+  border-radius: 2px;
   transition: opacity 1s linear;
 }
 .profile__add-button:hover {
@@ -139,6 +139,18 @@
 }
 
 @media screen and (max-width: 550px) {
+  .profile__job {
+    max-width: 327px;
+  }
+}
+
+/* 
+
+this fiixed 
+"The profile section should keep its layout on 518x - 549px screen resolutions"  
+*/
+
+@media screen and (max-width: 513px) {
   .profile__job {
     max-width: 290px;
   }

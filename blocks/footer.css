@@ -18,6 +18,15 @@
   .footer {
     margin-top: 48px;
     margin-bottom: 36px;
+    font-size: 14px;
+  }
+
+  /* 
+it took me a while but found what caused the horizontal scrolling
+i was puting a margin on the .footer insted of the .footer__text
+*/
+
+  .footer__text {
     margin-left: 19px;
   }
 }
