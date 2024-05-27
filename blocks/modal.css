@@ -6,12 +6,12 @@
   right: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
-  /* display: none; */
+  display: none;
   justify-content: center;
   align-items: center;
   padding: 0 19px;
 
-  display: flex;
+  /* display: flex; */
 }
 .modal__opened {
   display: flex;
@@ -26,7 +26,7 @@
   border-radius: 10px;
 }
 
-.modal__close {
+.modal__close-button {
   background-image: url(../images/Close\ Icon.svg);
   height: 40px;
   width: 40px;
@@ -41,7 +41,7 @@
   cursor: pointer;
 }
 
-.modal__close:hover {
+.modal__close-button:hover {
   opacity: 60%;
 }
 
