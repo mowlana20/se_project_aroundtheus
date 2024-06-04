@@ -147,20 +147,24 @@
           aria-label="modal close button"
         ></button>
         <p class="modal__heading">Edit profile</p>
-        <form class="modal__form">
+        <form class="modal__profile-form" id="modal__profile-form">
           <input
             type="text"
             name="title"
             class="modal__input-title"
-            placeholder="Jacques Cousteau"
+            placeholder="title"
           />
           <input
             type="text"
             name="job"
             class="modal__input-job"
-            placeholder="Explorer"
+            placeholder="job"
           />
-          <button class="modal__button" type="button" aria-label="nodal button">
+          <button
+            class="modal__save-button"
+            type="submit"
+            aria-label="nodal button"
+          >
             Save
           </button>
         </form>

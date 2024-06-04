@@ -56,7 +56,7 @@
   line-height: 1.21;
 }
 
-.modal__form {
+.modal__profile-form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -67,7 +67,6 @@
   height: 27.26px;
   border: none;
   border-bottom: 1px #000000 solid;
-  opacity: 20%;
   font-family: Inter, Arial, Helvetica, sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -81,7 +80,6 @@
   height: 27.26px;
   border: none;
   border-bottom: 1px #000000 solid;
-  opacity: 20%;
   font-family: Inter, Arial, Helvetica, sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -89,7 +87,7 @@
   padding: 0;
 }
 
-.modal__button {
+.modal__save-button {
   background-color: #000000;
   color: #fff;
   font-family: Inter, Arial, Helvetica, sans-serif;
