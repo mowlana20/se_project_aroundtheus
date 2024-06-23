@@ -31,7 +31,9 @@ const initialCards = [
 
 const profileEditBtn = document.querySelector("#profile__edit-button");
 const addCardButtom = document.querySelector("#profile__add-button");
-const modalCloseBtn = document.querySelector("#modal__close-button");
+const modalProfileCloseBtn = document.querySelector(
+  "#modal__profile-close-button"
+);
 const modalCardCloseBtn = document.querySelector("#modal__card-close-button");
 const profileEditmodal = document.querySelector("#modal_one");
 const addCardmodal = document.querySelector("#modal_adding-cards");
@@ -51,9 +53,12 @@ const cardTemplate =
 =            functions                        =
 =============================================*/
 
-function closePopUp() {
-  profileEditmodal.classList.remove("modal__opened");
-  addCardmodal.classList.remove("modal__opened");
+function closePopUp(modal) {
+  modal.classList.remove("modal__opened");
+}
+
+function openPopUp(modal) {
+  modal.classList.add("modal__opened");
 }
 
 function getCardElement(cardData) {
@@ -81,12 +86,12 @@ function handleProfileEditSubmit(e) {
   e.preventDefault();
   profileTitle.textContent = profileTitleInput.value;
   profileJob.textContent = profileJobInput.value;
-  closePopUp();
+  closePopUp(profileEditmodal);
 }
 
 function handleCardAddSubmit(e) {
   e.preventDefault();
-  closePopUp();
+  closePopUp(addCardmodal);
 }
 
 /*=============================================
@@ -96,11 +101,14 @@ function handleCardAddSubmit(e) {
 profileEditBtn.addEventListener("click", () => {
   profileTitleInput.value = profileTitle.textContent;
   profileJobInput.value = profileJob.textContent;
-  profileEditmodal.classList.add("modal__opened");
+  openPopUp(profileEditmodal);
 });
 
-modalCloseBtn.addEventListener("click", closePopUp);
-modalCardCloseBtn.addEventListener("click", closePopUp);
+modalProfileCloseBtn.addEventListener("click", () =>
+  closePopUp(profileEditmodal)
+);
+
+modalCardCloseBtn.addEventListener("click", () => closePopUp(addCardmodal));
 
 profileFormElement.addEventListener("submit", handleProfileEditSubmit);
 
@@ -111,6 +119,4 @@ initialCards.forEach((cardData) => {
 
 cardFormElement.addEventListener("submit", handleCardAddSubmit);
 
-addCardButtom.addEventListener("click", () => {
-  addCardmodal.classList.add("modal__opened");
-});
+addCardButtom.addEventListener("click", () => openPopUp(addCardmodal));
