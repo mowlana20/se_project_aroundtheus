@@ -1,9 +1,26 @@
+/* Importing normalize.css to reset and normalize browser default styles */
 @import url(../vendor/normalize.css);
+
+/* Importing custom fonts */
 @import url(../vendor/fonts.css);
+
+/* Importing base styles for the page layout */
 @import url(../blocks/page.css);
+
+/* Importing styles specific to the header section */
 @import url(../blocks/header.css);
+
+/* Importing styles specific to the footer section */
 @import url(../blocks/footer.css);
+
+/* Importing styles for the cards section */
 @import url(../blocks/cards.css);
+
+/* Importing styles for individual card elements */
 @import url(../blocks/card.css);
+
+/* Importing styles for the profile section */
 @import url(../blocks/profile.css);
+
+/* Importing styles for the modal component */
 @import url(../blocks/modal.css);
