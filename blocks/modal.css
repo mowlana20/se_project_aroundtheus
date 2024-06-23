@@ -62,7 +62,7 @@
   align-items: center;
 }
 
-.modal__input-name {
+.modal__input {
   width: 358px;
   height: 27.26px;
   border: none;
@@ -72,19 +72,14 @@
   font-weight: 400;
   line-height: 1.21;
   padding: 0;
+}
+
+.modal__input-name {
   margin-bottom: 29.74px;
 }
 
-.modal__input-job {
-  width: 358px;
-  height: 27.26px;
-  border: none;
-  border-bottom: 1px #000000 solid;
-  font-family: Inter, Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.21;
-  padding: 0;
+.modal__input-title {
+  margin-bottom: 29.74px;
 }
 
 .modal__save-button {
