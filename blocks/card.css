@@ -43,6 +43,10 @@
   transition: opacity 1s linear;
 }
 
+.card__like-button-active {
+  background: transparent url(../images/heart\ active.png) center no-repeat;
+}
+
 .card__like-button:hover {
   opacity: 50%;
   cursor: pointer;
