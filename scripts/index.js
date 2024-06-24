@@ -29,14 +29,16 @@ const initialCards = [
 =            Elements start                   =
 =============================================*/
 
-const profileEditBtn = document.querySelector("#profile__edit-button");
-const addCardButtom = document.querySelector("#profile__add-button");
-const modalProfileCloseBtn = document.querySelector(
-  "#modal__profile-close-button"
-);
-const modalCardCloseBtn = document.querySelector("#modal__card-close-button");
 const profileEditmodal = document.querySelector("#modal_one");
 const addCardmodal = document.querySelector("#modal_adding-cards");
+const profileEditBtn = document.querySelector("#profile__edit-button");
+const addCardButtom = document.querySelector("#profile__add-button");
+const modalProfileCloseBtn = profileEditmodal.querySelector(
+  "#modal__profile-close-button"
+);
+const modalCardCloseBtn = addCardmodal.querySelector(
+  "#modal__card-close-button"
+);
 const profileTitle = document.querySelector(".profile__title");
 const profileJob = document.querySelector(".profile__job");
 const profileTitleInput = document.querySelector(".modal__input-name");
