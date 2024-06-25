@@ -97,3 +97,28 @@
   border-radius: 2px;
   border: none;
 }
+
+.modal__image {
+  max-width: 75vw;
+  max-height: 75vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.modal__preview-container {
+  position: relative;
+  margin: 90px auto;
+  padding: 0;
+  max-width: 90%; /* Limit the maximum width of the modal */
+  max-height: 90%;
+}
+
+.modal__card_image-title {
+  margin-top: 10px;
+  margin-bottom: 0;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.21;
+}
