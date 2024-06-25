@@ -38,7 +38,7 @@ const modalCardCloseBtn = addCardmodal.querySelector("#modal__card-close-btn");
 
 const profileTitle = document.querySelector(".profile__title");
 const profileJob = document.querySelector(".profile__job");
-const profileTitleInput = document.querySelector(".modal__input-name");
+const profileNameInput = document.querySelector(".modal__input-name");
 const profileJobInput = document.querySelector(".modal__input-job");
 const profileFormElement = document.querySelector("#modal__profile-form");
 
@@ -47,6 +47,8 @@ const cardListEl = document.querySelector(".cards__list");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 
+const cardTitleInput = document.querySelector(".modal__input-title");
+const cardUrlInput = document.querySelector(".modal__input-url");
 /*=============================================
 =            functions                        =
 =============================================*/
@@ -80,13 +82,23 @@ function getCardElement(cardData) {
   return cardElement;
 }
 
+function createCardObject() {
+  const name = cardTitleInput.value;
+  const link = cardUrlInput.value;
+
+  return {
+    name: name,
+    link: link,
+  };
+}
+
 /*=============================================
 =            EventHandlers                        =
 =============================================*/
 
 function handleProfileEditSubmit(e) {
   e.preventDefault();
-  profileTitle.textContent = profileTitleInput.value;
+  profileTitle.textContent = profileNameInput.value;
   profileJob.textContent = profileJobInput.value;
   closePopUp(profileEditmodal);
 }
@@ -94,6 +106,9 @@ function handleProfileEditSubmit(e) {
 function handleCardAddSubmit(e) {
   e.preventDefault();
   closePopUp(addCardmodal);
+  const placeObject = createCardObject();
+  const cardElement = getCardElement(placeObject);
+  cardListEl.prepend(cardElement);
 }
 
 /*=============================================
@@ -101,7 +116,7 @@ function handleCardAddSubmit(e) {
 =============================================*/
 
 profileEditBtn.addEventListener("click", () => {
-  profileTitleInput.value = profileTitle.textContent;
+  profileNameInput.value = profileTitle.textContent;
   profileJobInput.value = profileJob.textContent;
   openPopUp(profileEditmodal);
 });
