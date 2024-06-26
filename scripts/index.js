@@ -56,11 +56,11 @@ const cardUrlInput = document.querySelector(".modal__input-url");
 =============================================*/
 
 function closePopUp(modal) {
-  modal.classList.remove("modal__opened");
+  modal.classList.remove("modal_opened");
 }
 
 function openPopUp(modal) {
-  modal.classList.add("modal__opened");
+  modal.classList.add("modal_opened");
 }
 
 function getCardElement(cardData) {
@@ -96,12 +96,9 @@ function getCardElement(cardData) {
 }
 
 function createCardObject() {
-  const name = cardTitleInput.value;
-  const link = cardUrlInput.value;
-
   return {
-    name: name,
-    link: link,
+    name: cardTitleInput.value,
+    link: cardUrlInput.value,
   };
 }
 
@@ -122,6 +119,8 @@ function handleCardAddSubmit(e) {
   const placeObject = createCardObject();
   const cardElement = getCardElement(placeObject);
   cardListEl.prepend(cardElement);
+
+  document.getElementById("modal__card-form").reset();
 }
 
 /*=============================================
