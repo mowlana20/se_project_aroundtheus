@@ -55,12 +55,58 @@ const cardUrlInput = document.querySelector(".modal__input-url");
 =            functions                        =
 =============================================*/
 
-function closePopUp(modal) {
-  modal.classList.remove("modal_opened");
-}
+// function clickOutListener(modal) {
+//   return function clickOutHandler(event) {
+//     if (!modal.contains(event.target)) {
+//       closePopUp(modal);
+//       document.removeEventListener("click", clickOutHandler);
+//       document.removeEventListener("keydown", escHandler);
+//     }
+//   };
+//   document.addEventListener("click", clickOutHandler);
+// }
+
+// // const a = (modal) => (event) => {
+//   // rename this masterpiece
+//   if (event.key === "Escape") {
+//     closePopUp(modal);
+//   }
+// };
+
+// function openPopUp(modal) {
+//   modal.classList.add("modal_opened");
+//   document.addEventListener("keydown", a(modal));
+// }
+
+// function closePopUp(modal) {
+//   modal.classList.remove("modal_opened");
+//   document.removeEventListener("keydown", a);
+// }
+
+const EscListener = (modal) => (event) => {
+  if (event.key === "Escape") {
+    console.log(event.key);
+    closePopUp(modal);
+  }
+};
+
+const clickOutListener = (modal) => (event) => {
+  if (!modal.contains(event.target)) {
+    console.log(!modal.contains(event.target));
+    closePopUp(modal);
+  }
+};
 
 function openPopUp(modal) {
   modal.classList.add("modal_opened");
+  document.addEventListener("keydown", EscListener(modal));
+  modal.addEventListener("click", clickOutListener(modal));
+}
+
+function closePopUp(modal) {
+  modal.classList.remove("modal_opened");
+  document.removeEventListener("keydown", EscListener);
+  modal.removeEventListener("click", clickOutListener);
 }
 
 function getCardElement(cardData) {
