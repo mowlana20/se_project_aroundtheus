@@ -55,34 +55,6 @@ const cardUrlInput = document.querySelector(".modal__input-url");
 =            functions                        =
 =============================================*/
 
-// function clickOutListener(modal) {
-//   return function clickOutHandler(event) {
-//     if (!modal.contains(event.target)) {
-//       closePopUp(modal);
-//       document.removeEventListener("click", clickOutHandler);
-//       document.removeEventListener("keydown", escHandler);
-//     }
-//   };
-//   document.addEventListener("click", clickOutHandler);
-// }
-
-// // const a = (modal) => (event) => {
-//   // rename this masterpiece
-//   if (event.key === "Escape") {
-//     closePopUp(modal);
-//   }
-// };
-
-// function openPopUp(modal) {
-//   modal.classList.add("modal_opened");
-//   document.addEventListener("keydown", a(modal));
-// }
-
-// function closePopUp(modal) {
-//   modal.classList.remove("modal_opened");
-//   document.removeEventListener("keydown", a);
-// }
-
 const EscListener = (modal) => (event) => {
   if (event.key === "Escape") {
     console.log(event.key);
@@ -91,9 +63,13 @@ const EscListener = (modal) => (event) => {
 };
 
 const clickOutListener = (modal) => (event) => {
-  if (!modal.contains(event.target)) {
-    console.log(!modal.contains(event.target));
-    closePopUp(modal);
+  console.log(modal);
+  console.log(event.target.id);
+  console.log(event.target.id === true);
+
+  //!modal.contains(event.target.id)
+  if (event.target.id === true) {
+    console.log(true);
   }
 };
 
@@ -105,9 +81,11 @@ function openPopUp(modal) {
 
 function closePopUp(modal) {
   modal.classList.remove("modal_opened");
-  document.removeEventListener("keydown", EscListener);
+  document.removeEventListener("keydown", EscListener(modal));
   modal.removeEventListener("click", clickOutListener);
 }
+
+/////////////////////////////////// working
 
 function getCardElement(cardData) {
   const cardElement = cardTemplate.cloneNode(true);
