@@ -55,34 +55,38 @@ const cardUrlInput = document.querySelector(".modal__input-url");
 =            functions                        =
 =============================================*/
 
-const EscListener = (modal) => (event) => {
+const EscListener = (event) => {
   if (event.key === "Escape") {
     console.log(event.key);
+    const modal = document.querySelector(".modal_opened");
     closePopUp(modal);
   }
 };
 
-const clickOutListener = (modal) => (event) => {
-  console.log(modal);
-  console.log(event.target.id);
-  console.log(event.target.id === true);
+function openProfileModal() {
+  openPopUp(profileEditmodal);
+}
 
-  //!modal.contains(event.target.id)
-  if (event.target.id === true) {
+const clickOutListener = (event) => {
+  // console.log("hi");
+
+  if (event.target.classList.contains("modal")) {
     console.log(true);
+    const modal = document.querySelector(".modal_opened");
+    closePopUp(modal);
   }
 };
 
 function openPopUp(modal) {
   modal.classList.add("modal_opened");
-  document.addEventListener("keydown", EscListener(modal));
-  modal.addEventListener("click", clickOutListener(modal));
+  document.addEventListener("keydown", EscListener);
+  document.addEventListener("click", clickOutListener);
 }
 
 function closePopUp(modal) {
   modal.classList.remove("modal_opened");
-  document.removeEventListener("keydown", EscListener(modal));
-  modal.removeEventListener("click", clickOutListener);
+  document.removeEventListener("keydown", EscListener);
+  document.removeEventListener("click", clickOutListener);
 }
 
 /////////////////////////////////// working
@@ -154,7 +158,7 @@ function handleCardAddSubmit(e) {
 profileEditBtn.addEventListener("click", () => {
   profileNameInput.value = profileTitle.textContent;
   profileJobInput.value = profileJob.textContent;
-  openPopUp(profileEditmodal);
+  openProfileModal();
 });
 
 modalCardCloseBtn.addEventListener("click", () => closePopUp(addCardmodal));
