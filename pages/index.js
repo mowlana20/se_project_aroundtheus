@@ -104,6 +104,13 @@ function closePopUp(modal) {
   document.removeEventListener("click", clickOutListener);
 }
 
+function handleImageClick() {
+  previewImage.src = cardData.link;
+  previewImage.alt = cardData.name;
+  previewTitleEL.textContent = cardData.name;
+  openPopUp(previewImageModal);
+}
+
 /////////////////////////////////// working
 
 function getCardElement(cardData) {
