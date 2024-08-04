@@ -6,22 +6,16 @@ export default class Card {
   }
 
   _setEventListener() {
-    console.log("1");
-
     // this._likeBtn.addEventListener("click", this._handleLikeBtn);
     this._likeBtn.addEventListener("click", () => {
       this._likeBtn.classList.toggle("card__like-button-active");
     });
 
     this._trashBtn.addEventListener("click", this._handleTrashBtn);
-    // this._handleLikeBtn();
-
-    console.log(this._likeBtn.classList);
   }
 
   _handleLikeBtn() {
     this._likeBtn.classList.toggle("card__like-button-active");
-    console.log("2");
   }
 
   _handleTrashBtn() {
@@ -32,12 +26,15 @@ export default class Card {
   getView() {
     this._cardElement = document
       .querySelector(this._cardSelector)
-      .content.firstElementChild.cloneNode(true);
+      .content.querySelector(".card")
+      .cloneNode(true);
+
+    console.log(this._cardElement);
 
     this._likeBtn = this._cardElement.querySelector(".card__like-button");
     this._trashBtn = this._cardElement.querySelector(".card__trash-button");
 
-    console.log("2get view");
+    console.log(this._likeBtn);
 
     this._setEventListener();
 
