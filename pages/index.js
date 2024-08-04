@@ -124,13 +124,13 @@ function getCardElement(cardData) {
     openPopUp(previewImageModal);
   });
 
-  trashBtn.addEventListener("click", (event) => {
-    event.target.closest(".card").remove();
-  });
+  // trashBtn.addEventListener("click", (event) => {
+  //   event.target.closest(".card").remove();
+  // });
 
-  likeBtn.addEventListener("click", () => {
-    likeBtn.classList.toggle("card__like-button-active");
-  });
+  // likeBtn.addEventListener("click", () => {
+  //   likeBtn.classList.toggle("card__like-button-active");
+  // });
 
   cardImageEL.src = cardData.link;
   cardImageEL.alt = cardData.name;
