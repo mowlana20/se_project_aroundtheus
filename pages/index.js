@@ -32,8 +32,8 @@ const cardData = {
   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
 };
 
-const card = new Card(cardData, "#card-template");
-card.getView();
+// const card = new Card(cardData, handleImageClick, "#card-template");
+// card.getView();
 
 /*=============================================
 =            Elements start                   =
@@ -42,6 +42,12 @@ card.getView();
 const profileEditmodal = document.querySelector("#modal_one");
 const addCardmodal = document.querySelector("#modal_adding-cards");
 const previewImageModal = document.querySelector("#modal_image");
+
+const previewImage = previewImageModal.querySelector(".modal__image");
+const previewTitleEL = previewImageModal.querySelector(
+  ".modal__card_image-title"
+);
+
 const profileEditBtn = document.querySelector("#profile__edit-button");
 const addCardButtom = document.querySelector("#profile__add-button");
 const modalProfileCloseBtn = profileEditmodal.querySelector("#modal__close");
@@ -111,39 +117,39 @@ function handleImageClick() {
   openPopUp(previewImageModal);
 }
 
-/////////////////////////////////// working
+/////////////////////////////////// workingssssssssssssssssssssssssssssssssssssss
 
-function getCardElement(cardData) {
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardImageEL = cardElement.querySelector(".card__image");
-  const cardTitleEL = cardElement.querySelector(".card__title");
-  const likeBtn = cardElement.querySelector(".card__like-button");
-  const trashBtn = cardElement.querySelector(".card__trash-button");
-  const previewImage = previewImageModal.querySelector(".modal__image");
-  const previewTitleEL = previewImageModal.querySelector(
-    ".modal__card_image-title"
-  );
+// function getCardElement(cardData) {
+//   const cardElement = cardTemplate.cloneNode(true);
+//   const cardImageEL = cardElement.querySelector(".card__image");
+//   const cardTitleEL = cardElement.querySelector(".card__title");
+//   const likeBtn = cardElement.querySelector(".card__like-button");
+//   const trashBtn = cardElement.querySelector(".card__trash-button");
+//   const previewImage = previewImageModal.querySelector(".modal__image");
+//   const previewTitleEL = previewImageModal.querySelector(
+//     ".modal__card_image-title"
+//   );
 
-  cardImageEL.addEventListener("click", () => {
-    previewImage.src = cardData.link;
-    previewImage.alt = cardData.name;
-    previewTitleEL.textContent = cardData.name;
-    openPopUp(previewImageModal);
-  });
+//   cardImageEL.addEventListener("click", () => {
+//     previewImage.src = cardData.link;
+//     previewImage.alt = cardData.name;
+//     previewTitleEL.textContent = cardData.name;
+//     openPopUp(previewImageModal);
+//   });
 
-  // trashBtn.addEventListener("click", (event) => {
-  //   event.target.closest(".card").remove();
-  // });
+//   // trashBtn.addEventListener("click", (event) => {
+//   //   event.target.closest(".card").remove();
+//   // });
 
-  // likeBtn.addEventListener("click", () => {
-  //   likeBtn.classList.toggle("card__like-button-active");
-  // });
+//   // likeBtn.addEventListener("click", () => {
+//   //   likeBtn.classList.toggle("card__like-button-active");
+//   // });
 
-  cardImageEL.src = cardData.link;
-  cardImageEL.alt = cardData.name;
-  cardTitleEL.textContent = cardData.name;
-  return cardElement;
-}
+//   cardImageEL.src = cardData.link;
+//   cardImageEL.alt = cardData.name;
+//   cardTitleEL.textContent = cardData.name;
+//   return cardElement;
+// }
 
 function createCardObject() {
   return {
@@ -213,8 +219,8 @@ modalPreviewCloseBtn.addEventListener("click", () =>
 profileFormElement.addEventListener("submit", handleProfileEditSubmit);
 
 initialCards.forEach((cardData) => {
-  const cardElement = getCardElement(cardData);
-  cardListEl.prepend(cardElement);
+  const cardElement = new Card(cardData, handleImageClick, "#card-template");
+  cardListEl.prepend(cardElement.getView());
 });
 
 cardFormElement.addEventListener("submit", handleCardAddSubmit);
