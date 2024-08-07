@@ -1,5 +1,5 @@
 export default class FormValidator {
-  constructor(options, formElms) {
+  constructor(options, formEls) {
     this._options = options;
     this._formSelector = options.formSelector;
     this._inputSelector = options.inputSelector;
@@ -7,62 +7,65 @@ export default class FormValidator {
     this._inactiveButtonClass = options.inactiveButtonClass;
     this._inputErrorClass = options.inputErrorClass;
     this._errorClass = options.errorClass;
-    this._formElms = formElms;
+    this._formEls = formEls;
   }
 
-  _hideInputError(this._formEl, inputEl, this._options){
-    this._errorMessageEl = this._formEl.querySelector(`#${inputEl.id}-error`);
-  inputEl.classList.remove(this._inputErrorClass);
-  this._errorMessageEl.textContent = "";
-  this._errorMessageEl.classList.remove(this._errorClass);
+  _hideInputError(inputEl, formEl) {
+    this._errorMessageEl = formEl.querySelector(`#${inputEl.id}-error`);
+    inputEl.classList.remove(this._inputErrorClass);
+    this._errorMessageEl.textContent = "";
+    this._errorMessageEl.classList.remove(this._errorClass);
   }
+  //end of branch
 
-  _showInputError(this._formEl, inputEl, this._options){
-   this._errorMessageEl = this._formEl.querySelector(`#${inputEl.id}-error`);
-  inputEl.classList.add(this._inputErrorClass);
-  this._errorMessageEl.textContent = inputEl.validationMessage;
-  this._errorMessageEl.classList.add(this._errorClass);
+  _showInputError(formEl, inputEl) {
+    this._errorMessageEl = formEl.querySelector(`#${inputEl.id}-error`);
+    inputEl.classList.add(this._inputErrorClass);
+    this._errorMessageEl.textContent = inputEl.validationMessage;
+    this._errorMessageEl.classList.add(this._errorClass);
   }
+  //end of branch
 
-
-  _checkInputValitity(this._formEl, inputEl, this._options){
+  _checkInputValitity(formEl, inputEl) {
     if (!inputEl.validity.valid) {
-        return _showInputError(this._formEl, inputEl, this._options);
-      }
-    
-      _hideInputError(this._formEl, inputEl, this._options);
+      return this._showInputError(formEl, inputEl);
+    }
+
+    this._hideInputError(inputEl, formEl);
   }
 
-  _hasInvalidInput(inputList) {
-    return !inputList.every((inputEl) => inputEl.validity.valid);
+  _hasInvalidInput() {
+    return !this._inputEls.every((inputEl) => inputEl.validity.valid);
   }
-  
-  _disableBtn(submitBtn, inactiveButtonClass) {
-    submitBtn.classList.add(inactiveButtonClass);
-    submitBtn.disabled = true;
+  //end of branch
+
+  _disableBtn() {
+    this._submitBtn.classList.add(this._inactiveButtonClass);
+    this._submitBtn.disabled = true;
   }
-  
-  _enableBtn(submitBtn, inactiveButtonClass) {
-    submitBtn.classList.remove(inactiveButtonClass);
-    submitBtn.disabled = false;
+  //end of branch
+
+  _enableBtn() {
+    this._submitBtn.classList.remove(this._inactiveButtonClass);
+    this._submitBtn.disabled = false;
+  }
+  //end of branch
+
+  _toggleButtonState() {
+    if (this._hasInvalidInput()) {
+      return this._disableBtn();
+    }
+
+    this._enableBtn();
   }
 
-  _toggleButtonState(this._inputEls, this._submitBtn, this._options){
-    if (_hasInvalidInput(inputEls)) {
-        return _disableBtn(submitBtn, inactiveButtonClass);
-      }
-    
-      _enableBtn(submitBtn, inactiveButtonClass);
-  }
-
-  _setEventListeners(this._formEl, this._options) {
-    this._inputEls = [...this._formEl.querySelectorAll(inputSelector)];
-    this._submitBtn = this._formEl.querySelector(submitButtonSelector);
+  _setEventListeners(formEl) {
+    this._inputEls = [...formEl.querySelectorAll(this._inputSelector)];
+    this._submitBtn = formEl.querySelector(this._submitButtonSelector);
     this._inputEls.forEach((inputEl) => {
       inputEl.addEventListener("input", (e) => {
- 
-        _checkInputValitity(this._formEl, inputEl, this._options);
-        _toggleButtonState(this._inputEls, this._submitBtn, this._options);
+        this._checkInputValitity(formEl, inputEl);
+        this._toggleButtonState();
       });
     });
   }
@@ -74,7 +77,7 @@ export default class FormValidator {
         e.preventDefault();
       });
 
-      _setEventListeners(this._formEl, this._options);
+      this._setEventListeners(formEl);
     });
   }
 }

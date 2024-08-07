@@ -1,4 +1,24 @@
 import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
+
+const options = {
+  formSelector: ".modal__form",
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__button",
+  inactiveButtonClass: "modal__button_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
+};
+const formEls = [...document.querySelectorAll(options.formSelector)];
+const profileFormElement = document.forms["modal__profile-form"];
+const cardFormElement = document.forms["modal__card-form"];
+
+const profileFormValidator = new FormValidator(options, [profileFormElement]);
+const cardFormValidator = new FormValidator(options, [cardFormElement]);
+
+// Enable validation
+profileFormValidator.enableValidation();
+cardFormValidator.enableValidation();
 
 const initialCards = [
   {
@@ -60,10 +80,8 @@ const profileNameInput = document.querySelector(".modal__input-name");
 const profileJobInput = document.querySelector(".modal__input-job");
 
 // const profileFormElement = document.querySelector("#modal__profile-form");
-const profileFormElement = document.forms["modal__profile-form"];
 
 // const cardFormElement = document.querySelector("#modal__card-form");
-const cardFormElement = document.forms["modal__card-form"];
 
 const cardListEl = document.querySelector(".cards__list");
 const cardTemplate =
@@ -110,10 +128,10 @@ function closePopUp(modal) {
   document.removeEventListener("click", clickOutListener);
 }
 
-function handleImageClick() {
-  previewImage.src = cardData.link;
-  previewImage.alt = cardData.name;
-  previewTitleEL.textContent = cardData.name;
+function handleImageClick({ link, name }) {
+  previewImage.src = link;
+  previewImage.alt = name;
+  previewTitleEL.textContent = name;
   openPopUp(previewImageModal);
 }
 
@@ -173,8 +191,11 @@ function handleCardAddSubmit(e) {
   e.preventDefault();
   closePopUp(addCardmodal);
   const placeObject = createCardObject();
-  const cardElement = getCardElement(placeObject);
-  cardListEl.prepend(cardElement);
+  // const cardElement = getCardElement(placeObject);
+  // cardListEl.prepend(cardElement);
+
+  const cardElement = new Card(placeObject, handleImageClick, "#card-template");
+  cardListEl.prepend(cardElement.getView());
 
   cardFormElement.reset();
 }
