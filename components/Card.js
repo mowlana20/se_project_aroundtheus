@@ -7,10 +7,7 @@ export default class Card {
   }
 
   _setEventListener() {
-    // this._likeBtn.addEventListener("click", this._handleLikeBtn);
-    this._likeBtn.addEventListener("click", () => {
-      this._likeBtn.classList.toggle("card__like-button-active");
-    });
+    this._likeBtn.addEventListener("click", () => this._handleLikeBtn());
 
     this._trashBtn.addEventListener("click", () => this._handleTrashBtn());
 
@@ -38,11 +35,6 @@ export default class Card {
       .cloneNode(true);
     this._cardImageEL = this._cardElement.querySelector(".card__image");
     this._cardTitleEL = this._cardElement.querySelector(".card__title");
-
-    this._previewImage = this._cardElement.querySelector(".modal__image");
-    this._previewTitleEL = this._cardElement.querySelector(
-      ".modal__card_image-title"
-    );
 
     this._likeBtn = this._cardElement.querySelector(".card__like-button");
     this._trashBtn = this._cardElement.querySelector(".card__trash-button");

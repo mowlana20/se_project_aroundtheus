@@ -187,6 +187,11 @@ function handleProfileEditSubmit(e) {
   closePopUp(profileEditmodal);
 }
 
+function createCard(item) {
+  const cardElement = new Card(item, handleImageClick, "#card-template");
+  return cardElement.getView();
+}
+
 function handleCardAddSubmit(e) {
   e.preventDefault();
   closePopUp(addCardmodal);
@@ -194,8 +199,7 @@ function handleCardAddSubmit(e) {
   // const cardElement = getCardElement(placeObject);
   // cardListEl.prepend(cardElement);
 
-  const cardElement = new Card(placeObject, handleImageClick, "#card-template");
-  cardListEl.prepend(cardElement.getView());
+  cardListEl.prepend(createCard(placeObject));
 
   cardFormElement.reset();
 }
@@ -240,8 +244,8 @@ modalPreviewCloseBtn.addEventListener("click", () =>
 profileFormElement.addEventListener("submit", handleProfileEditSubmit);
 
 initialCards.forEach((cardData) => {
-  const cardElement = new Card(cardData, handleImageClick, "#card-template");
-  cardListEl.prepend(cardElement.getView());
+  // const cardElement = new Card(cardData, handleImageClick, "#card-template");
+  cardListEl.prepend(createCard(cardData));
 });
 
 cardFormElement.addEventListener("submit", handleCardAddSubmit);
