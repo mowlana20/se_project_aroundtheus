@@ -1,5 +1,6 @@
 export default class FormValidator {
-  constructor(options, formEls) {
+  constructor(options, formEl) {
+    // Store the options and form element references.
     this._options = options;
     this._formSelector = options.formSelector;
     this._inputSelector = options.inputSelector;
@@ -7,77 +8,95 @@ export default class FormValidator {
     this._inactiveButtonClass = options.inactiveButtonClass;
     this._inputErrorClass = options.inputErrorClass;
     this._errorClass = options.errorClass;
-    this._formEls = formEls;
+    this._formEl = formEl;
   }
 
-  _hideInputError(inputEl, formEl) {
-    this._errorMessageEl = formEl.querySelector(`#${inputEl.id}-error`);
+  // Hide the error message and remove error styles from the input.
+  _hideInputError(inputEl) {
+    this._errorMessageEl = this._formEl.querySelector(`#${inputEl.id}-error`);
     inputEl.classList.remove(this._inputErrorClass);
     this._errorMessageEl.textContent = "";
     this._errorMessageEl.classList.remove(this._errorClass);
   }
-  //end of branch
 
-  _showInputError(formEl, inputEl) {
-    this._errorMessageEl = formEl.querySelector(`#${inputEl.id}-error`);
+  // Show the error message and apply error styles to the input.
+  _showInputError(inputEl) {
+    this._errorMessageEl = this._formEl.querySelector(`#${inputEl.id}-error`);
     inputEl.classList.add(this._inputErrorClass);
     this._errorMessageEl.textContent = inputEl.validationMessage;
     this._errorMessageEl.classList.add(this._errorClass);
   }
-  //end of branch
 
-  _checkInputValitity(formEl, inputEl) {
+  // Check if the input value is valid and show or hide error messages accordingly.
+  _checkInputValitity(inputEl) {
     if (!inputEl.validity.valid) {
-      return this._showInputError(formEl, inputEl);
+      return this._showInputError(inputEl);
     }
-
-    this._hideInputError(inputEl, formEl);
+    this._hideInputError(inputEl);
   }
 
+  // Check if there are any invalid inputs in the form.
   _hasInvalidInput() {
     return !this._inputEls.every((inputEl) => inputEl.validity.valid);
   }
-  //end of branch
 
+  // Disable the submit button by adding the inactive class and setting the disabled property.
   _disableBtn() {
     this._submitBtn.classList.add(this._inactiveButtonClass);
     this._submitBtn.disabled = true;
   }
-  //end of branch
 
+  // Enable the submit button by removing the inactive class and clearing the disabled property.
   _enableBtn() {
     this._submitBtn.classList.remove(this._inactiveButtonClass);
     this._submitBtn.disabled = false;
   }
-  //end of branch
 
+  // Toggle the submit button state based on the form's validity.
   _toggleButtonState() {
     if (this._hasInvalidInput()) {
       return this._disableBtn();
     }
-
     this._enableBtn();
   }
 
-  _setEventListeners(formEl) {
-    this._inputEls = [...formEl.querySelectorAll(this._inputSelector)];
-    this._submitBtn = formEl.querySelector(this._submitButtonSelector);
+  // Set up event listeners for the form inputs to validate on the fly.
+  _setEventListeners() {
+    this._inputEls = [...this._formEl.querySelectorAll(this._inputSelector)];
+    this._submitBtn = this._formEl.querySelector(this._submitButtonSelector);
+
+    // For each input element, listen for changes and validate the input.
     this._inputEls.forEach((inputEl) => {
-      inputEl.addEventListener("input", (e) => {
-        this._checkInputValitity(formEl, inputEl);
+      inputEl.addEventListener("input", () => {
+        this._checkInputValitity(inputEl);
         this._toggleButtonState();
       });
     });
   }
 
+  // Initialize form validation by preventing default form submission and setting up listeners.
   enableValidation() {
-    //question about formEl
-    this._formEls.forEach((formEl) => {
-      formEl.addEventListener("submit", (e) => {
-        e.preventDefault();
-      });
+    console.log(this._formEl);
 
-      this._setEventListeners(formEl);
+    this._formEl.addEventListener("submit", (e) => {
+      e.preventDefault();
     });
+
+    this._setEventListeners();
   }
 }
+
+//////////////////////////////////////
+
+/*
+
+const closeButtons = document.querySelectorAll('.modal__close');
+
+closeButtons.forEach((button) => {
+  const popup = button.closest('.modal');
+  button.addEventListener('click', () => closePopup(popup));
+});
+
+*/
+
+///////////////////////////
