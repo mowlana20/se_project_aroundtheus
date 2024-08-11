@@ -41,7 +41,7 @@ export default class FormValidator {
   }
 
   // Disable the submit button by adding the inactive class and setting the disabled property.
-  _disableBtn() {
+  disableBtn() {
     this._submitBtn.classList.add(this._inactiveButtonClass);
     this._submitBtn.disabled = true;
   }
@@ -55,7 +55,7 @@ export default class FormValidator {
   // Toggle the submit button state based on the form's validity.
   _toggleButtonState() {
     if (this._hasInvalidInput()) {
-      return this._disableBtn();
+      return this.disableBtn();
     }
     this._enableBtn();
   }
