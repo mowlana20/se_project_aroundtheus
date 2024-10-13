@@ -1,4 +1,5 @@
 import Card from "../components/Card.js";
+import "../pages/index.css";
 import FormValidator from "../components/FormValidator.js";
 
 const options = {

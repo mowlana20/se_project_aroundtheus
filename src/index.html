@@ -10,14 +10,14 @@
     <title>Around The U.S</title>
 
     <!-- Link to the external CSS file -->
-    <link rel="stylesheet" href="./pages/index.css" />
+    <!-- <link rel="stylesheet" href="./pages/index.css" /> -->
   </head>
   <body class="page">
     <div class="page__content">
       <!-- Header section with a logo -->
       <header class="header page__section">
         <img
-          src="./images/logo.svg"
+          src="<%=require('./images/logo.svg')%>"
           alt="Around The U.S logo"
           class="header__logo"
         />
@@ -27,7 +27,7 @@
         <!-- Profile section -->
         <section class="profile page__section">
           <img
-            src="./images/Avatar.png"
+            src="<%=require('./images/Avatar.png')%>"
             alt="image of avatar"
             class="profile__image"
           />
@@ -208,7 +208,7 @@
     </template>
 
     <!-- Link to the external JavaScript file -->
-    <script src="./pages/index.js" type="module"></script>
+    <!-- <script src="./pages/index.js" type="module"></script> -->
     <!-- <script src="./components/validation.js"></script> -->
   </body>
 </html>
