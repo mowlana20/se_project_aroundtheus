@@ -1,6 +1,7 @@
 import Card from "../components/Card.js";
 import "../pages/index.css";
 import FormValidator from "../components/FormValidator.js";
+import PopupWithImage from "../components/PopupWithImage.js";
 
 const options = {
   formSelector: ".modal__form",
@@ -17,10 +18,13 @@ const cardFormElement = document.forms["modal__card-form"];
 
 const profileFormValidator = new FormValidator(options, profileFormElement);
 const cardFormValidator = new FormValidator(options, cardFormElement);
+const popupWithImage = new PopupWithImage("#modal_image");
 
 // Enable validation
 profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();
+
+popupWithImage.setEventListeners();
 
 const initialCards = [
   {
@@ -102,10 +106,8 @@ function closePopUp(modal) {
 
 // Handle image click for preview
 function handleImageClick({ link, name }) {
-  previewImage.src = link;
-  previewImage.alt = name;
-  previewTitleEL.textContent = name;
-  openPopUp(previewImageModal);
+  const data = { link, name };
+  popupWithImage.open(data);
 }
 
 // Create a card object from input values
