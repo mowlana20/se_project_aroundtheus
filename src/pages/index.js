@@ -1,16 +1,25 @@
 import Card from "../components/Card.js";
+import Section from "../components/Section.js";
 import "../pages/index.css";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
+import { initialCards, options } from "../utils/constants";
 
-const options = {
-  formSelector: ".modal__form",
-  inputSelector: ".modal__input",
-  submitButtonSelector: ".modal__button",
-  inactiveButtonClass: "modal__button_disabled",
-  inputErrorClass: "modal__input_type_error",
-  errorClass: "modal__error_visible",
-};
+// const options = {
+//   formSelector: ".modal__form",
+//   inputSelector: ".modal__input",
+//   submitButtonSelector: ".modal__button",
+//   inactiveButtonClass: "modal__button_disabled",
+//   inputErrorClass: "modal__input_type_error",
+//   errorClass: "modal__error_visible",
+// };
+
+const userInfo = new UserInfo({
+  nameSelector: ".profile__title",
+  jobSelector: ".profile__job",
+});
 
 const formEls = [...document.querySelectorAll(options.formSelector)];
 const profileFormElement = document.forms["modal__profile-form"];
@@ -26,32 +35,32 @@ cardFormValidator.enableValidation();
 
 popupWithImage.setEventListeners();
 
-const initialCards = [
-  {
-    name: "Yosemite Valley",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-  },
-  {
-    name: "Lake Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
-  },
-  {
-    name: "Bald Mountains",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
-  },
-  {
-    name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
-  },
-  {
-    name: "Vanoise National Park",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
-  },
-  {
-    name: "Lago di Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
-  },
-];
+// const initialCards = [
+//   {
+//     name: "Yosemite Valley",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
+//   },
+//   {
+//     name: "Lake Louise",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
+//   },
+//   {
+//     name: "Bald Mountains",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
+//   },
+//   {
+//     name: "Latemar",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
+//   },
+//   {
+//     name: "Vanoise National Park",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
+//   },
+//   {
+//     name: "Lago di Braies",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
+//   },
+// ];
 
 // Modal elements
 const profileEditModal = document.querySelector("#modal_one");
@@ -119,12 +128,33 @@ function createCardObject() {
 }
 
 // Event handlers
-function handleProfileEditSubmit(e) {
-  e.preventDefault();
-  profileTitle.textContent = profileNameInput.value;
-  profileJob.textContent = profileJobInput.value;
-  closePopUp(profileEditModal);
-}
+
+// function handleProfileEditSubmit(e) {
+//   e.preventDefault();
+//   profileTitle.textContent = profileNameInput.value;
+//   profileJob.textContent = profileJobInput.value;
+//   closePopUp(profileEditModal);
+// }
+
+const popupEditProfile = new PopupWithForm({
+  popupSelector: "#modal_one",
+  handleFormSubmit: (formData) => {
+    userInfo.setUserInfo(formData);
+    popupEditProfile.close();
+  },
+});
+// popupEditProfile.setEventListeners();
+
+const popupAddCard = new PopupWithForm({
+  popupSelector: "#modal_adding-cards",
+  handleFormSubmit: (formData) => {
+    const cardData = { name: formData.title, link: formData.url };
+    cardListEl.prepend(createCard(cardData));
+    cardFormValidator.disableBtn();
+    popupAddCard.close();
+  },
+});
+// popupAddCard.setEventListeners();
 
 // Create and return a card element
 function createCard(item) {
@@ -132,22 +162,35 @@ function createCard(item) {
   return cardElement.getView();
 }
 
-function handleCardAddSubmit(e) {
-  e.preventDefault();
-  closePopUp(addCardModal);
-  const placeObject = createCardObject();
-  cardListEl.prepend(createCard(placeObject));
-  cardFormElement.reset();
-  cardFormValidator.disableBtn();
-}
+// function handleCardAddSubmit(e) {
+//   e.preventDefault();
+//   closePopUp(addCardModal);
+//   const placeObject = createCardObject();
+//   cardListEl.prepend(createCard(placeObject));
+//   cardFormElement.reset();
+//   cardFormValidator.disableBtn();
+// }
 
 // Event listeners
+
+//
+
+// profileEditBtn.addEventListener("click", () => {
+//   profileNameInput.value = profileTitle.textContent;
+//   profileJobInput.value = profileJob.textContent;
+//   openPopUp(profileEditModal);
+// });
+
+//
+
 profileEditBtn.addEventListener("click", () => {
-  profileNameInput.value = profileTitle.textContent;
-  profileJobInput.value = profileJob.textContent;
-  openPopUp(profileEditModal);
+  const userData = userInfo.getUserInfo();
+  profileNameInput.value = userData.name;
+  profileJobInput.value = userData.job;
+  popupEditProfile.open();
 });
 
+//
 const closeButtons = document.querySelectorAll(".modal__close-button");
 
 closeButtons.forEach((button) => {
@@ -166,11 +209,37 @@ modalPreviewCloseBtn.addEventListener("click", () =>
 
 */
 
-profileFormElement.addEventListener("submit", handleProfileEditSubmit);
+//profileFormElement.addEventListener("submit", handleProfileEditSubmit);
 
-initialCards.forEach((cardData) => {
-  cardListEl.prepend(createCard(cardData));
-});
+// initialCards.forEach((cardData) => {
+//   cardListEl.prepend(createCard(cardData));
+// });
 
-cardFormElement.addEventListener("submit", handleCardAddSubmit);
-addCardButton.addEventListener("click", () => openPopUp(addCardModal));
+//
+
+// Define the renderer function
+function renderCard(item) {
+  const card = createCard(item); // Assuming createCard returns a card element
+  section.addItem(card);
+}
+
+// Create an instance of Section
+const section = new Section(
+  { items: initialCards, renderer: renderCard },
+  ".cards__list"
+);
+
+// Call renderItems on page load to add all items to the page
+section.renderItems();
+
+//
+
+//cardFormElement.addEventListener("submit", handleCardAddSubmit);
+
+//
+
+// addCardButton.addEventListener("click", () => openPopUp(addCardModal));
+
+//
+
+addCardButton.addEventListener("click", () => popupAddCard.open());

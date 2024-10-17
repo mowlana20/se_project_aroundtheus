@@ -76,8 +76,6 @@ export default class FormValidator {
 
   // Initialize form validation by preventing default form submission and setting up listeners.
   enableValidation() {
-    console.log(this._formEl);
-
     this._formEl.addEventListener("submit", (e) => {
       e.preventDefault();
     });
