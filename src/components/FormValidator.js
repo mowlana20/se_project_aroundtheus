@@ -83,18 +83,3 @@ export default class FormValidator {
     this._setEventListeners();
   }
 }
-
-//////////////////////////////////////
-
-/*
-
-const closeButtons = document.querySelectorAll('.modal__close');
-
-closeButtons.forEach((button) => {
-  const popup = button.closest('.modal');
-  button.addEventListener('click', () => closePopup(popup));
-});
-
-*/
-
-///////////////////////////
