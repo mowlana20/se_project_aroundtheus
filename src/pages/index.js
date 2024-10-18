@@ -25,17 +25,6 @@ profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();
 popupWithImage.setEventListeners();
 
-// Modal elements for different functionalities
-const profileEditModal = document.querySelector("#modal_one");
-const addCardModal = document.querySelector("#modal_adding-cards");
-const previewImageModal = document.querySelector("#modal_image");
-
-// Preview image elements
-const previewImage = previewImageModal.querySelector(".modal__image");
-const previewTitleEL = previewImageModal.querySelector(
-  ".modal__card_image-title"
-);
-
 // Buttons for opening modals
 const profileEditBtn = document.querySelector("#profile__edit-button");
 const addCardButton = document.querySelector("#profile__add-button");
@@ -46,12 +35,8 @@ const profileJobInput = document.querySelector(".modal__input-job");
 const cardTitleInput = document.querySelector(".modal__input-title");
 const cardUrlInput = document.querySelector(".modal__input-url");
 
-// Card container element
-const cardListEl = document.querySelector(".cards__list");
-
 // Handle image click to open preview
-function handleImageClick({ link, name }) {
-  const data = { link, name };
+function handleImageClick(data) {
   popupWithImage.open(data);
 }
 
@@ -69,6 +54,7 @@ const popupEditProfile = new PopupWithForm({
   handleFormSubmit: (formData) => {
     userInfo.setUserInfo(formData);
     popupEditProfile.close();
+    popupEditProfile.formElement.reset();
   },
 });
 
@@ -77,9 +63,12 @@ const popupAddCard = new PopupWithForm({
   popupSelector: "#modal_adding-cards",
   handleFormSubmit: (formData) => {
     const cardData = { name: formData.title, link: formData.url };
-    cardListEl.prepend(createCard(cardData));
+    section.addItem(createCard(cardData));
+    // cardListEl.prepend(createCard(cardData));
     cardFormValidator.disableBtn();
+
     popupAddCard.close();
+    popupAddCard.formElement.reset();
   },
 });
 
