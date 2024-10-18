@@ -49,33 +49,6 @@ const cardUrlInput = document.querySelector(".modal__input-url");
 // Card container element
 const cardListEl = document.querySelector(".cards__list");
 
-// Listeners for escape key and click outside modal to close it
-const escListener = (event) => {
-  if (event.key === "Escape") {
-    const modal = document.querySelector(".modal_opened");
-    closePopUp(modal);
-  }
-};
-
-const clickOutListener = (event) => {
-  if (event.target.classList.contains("modal")) {
-    closePopUp(event.target);
-  }
-};
-
-// Functions to open and close modals
-function openPopUp(modal) {
-  modal.classList.add("modal_opened");
-  document.addEventListener("keydown", escListener);
-  document.addEventListener("click", clickOutListener);
-}
-
-function closePopUp(modal) {
-  modal.classList.remove("modal_opened");
-  document.removeEventListener("keydown", escListener);
-  document.removeEventListener("click", clickOutListener);
-}
-
 // Handle image click to open preview
 function handleImageClick({ link, name }) {
   const data = { link, name };
@@ -122,13 +95,6 @@ profileEditBtn.addEventListener("click", () => {
   profileNameInput.value = userData.name;
   profileJobInput.value = userData.job;
   popupEditProfile.open();
-});
-
-// Add event listeners for close buttons in all modals
-const closeButtons = document.querySelectorAll(".modal__close-button");
-closeButtons.forEach((button) => {
-  const popup = button.closest(".modal");
-  button.addEventListener("click", () => closePopUp(popup));
 });
 
 // Render cards on the page using Section class
