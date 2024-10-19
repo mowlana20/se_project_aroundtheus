@@ -63,10 +63,8 @@ const popupAddCard = new PopupWithForm({
   popupSelector: "#modal_adding-cards",
   handleFormSubmit: (formData) => {
     const cardData = { name: formData.title, link: formData.url };
-    section.addItem(createCard(cardData));
-    // cardListEl.prepend(createCard(cardData));
+    renderCard(cardData);
     cardFormValidator.disableBtn();
-
     popupAddCard.close();
     popupAddCard.formElement.reset();
   },
