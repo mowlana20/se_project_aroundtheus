@@ -22,6 +22,8 @@ we used different technologies like flex grid and flex box to make his project.
 
 - [Link to the project on github](https://github.com/mowlana20/se_project_aroundtheus)
 
+- [Link to the project site](https://mowlana20.github.io/se_project_aroundtheus/)
+
 - [Link to the project on github pages](https://mowlana20.github.io/se_project_aroundtheus/)
 
 **vedio**
