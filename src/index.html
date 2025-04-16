@@ -26,11 +26,13 @@
       <main class="content">
         <!-- Profile section -->
         <section class="profile page__section">
-          <img
-            src="<%=require('./images/Avatar.png')%>"
-            alt="image of avatar"
-            class="profile__image"
-          />
+          <div class="profile__image-container">
+            <img
+              src="<%=require('./images/Avatar.png')%>"
+              alt="image of avatar"
+              class="profile__image"
+            />
+          </div>
           <div class="profile__info">
             <h1 class="profile__title">Jacques Cousteau</h1>
             <!-- Edit button for profile -->
@@ -183,6 +185,73 @@
 
         <img src="" alt="" class="modal__image" />
         <h2 class="modal__card_image-title"></h2>
+      </div>
+    </div>
+
+    <!-- Modal for deleteing card -->
+    <div class="modal" id="modal_delete-card">
+      <div class="modal__container">
+        <!-- Close button for the modal -->
+        <button
+          class="modal__button modal__close-button modal__img-close-button"
+          id="modal__close"
+          type="button"
+          aria-label="modal close button"
+        ></button>
+        <form class="modal__form">
+          <p class="modal__heading modal__heading-del">Are you sure?</p>
+
+          <button
+            class="modal__button modal__delete-image-button"
+            type="submit"
+            aria-label="nodal button"
+          >
+            Yes
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal for editing profile IMAGE -->
+    <div class="modal" id="modal_profile-image">
+      <div class="modal__container">
+        <!-- Close button for the modal -->
+        <button
+          class="modal__button modal__close-button"
+          id="modal__close"
+          type="button"
+          aria-label="modal close button"
+        ></button>
+        <p class="modal__heading">Change profile picture</p>
+
+        <!-- Form inside the modal for editing profile details -->
+        <form
+          class="modal__form modal__profile-image"
+          id="modal__profile-image"
+        >
+          <div class="modal__lable-container">
+            <label class="modal__label">
+              <input
+                type="text"
+                name="name"
+                id="owner-name"
+                class="modal__input modal__input-name"
+                placeholder="Url"
+                required
+                minlength="2"
+              />
+              <span class="modal__error" id="owner-name-error"></span>
+            </label>
+          </div>
+          <!-- Save button for the form -->
+          <button
+            class="modal__button modal__save-button"
+            type="submit"
+            aria-label="nodal button"
+          >
+            Save
+          </button>
+        </form>
       </div>
     </div>
 

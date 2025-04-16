@@ -1,33 +1,51 @@
 export default class Card {
-  constructor(data, handleImageClick, cardSelector) {
+  constructor(
+    data,
+    handleImageClick,
+    cardSelector,
+    handleDeleteClick,
+    handleLikeClick
+  ) {
     this._name = data.name;
     this._link = data.link;
+    this._id = data._id;
+    this._isLiked = data.isLiked;
+    this._handleLikeClick = handleLikeClick;
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
+    this._handleDeleteClick = handleDeleteClick;
   }
 
   _setEventListener() {
     // Like button click handler
-    this._likeBtn.addEventListener("click", () => this._handleLikeBtn());
+    this._likeBtn.addEventListener("click", () =>
+      this._handleLikeClick({ _id: this._id, isLiked: this._isLiked }, this)
+    );
 
     // Trash button click handler
-    this._trashBtn.addEventListener("click", () => this._handleTrashBtn());
+    this._trashBtn.addEventListener("click", () => {
+      this._handleDeleteClick({ id: this._id, element: this._cardElement });
+    });
 
+    // _handleTrashBtn() {
+    //   // Remove card from the DOM
+    //   this._cardElement.remove();
+    //   this._cardElement = null;
+    // }
     // Image click handler
     this._cardImageEL.addEventListener("click", () => {
       this._handleImageClick({ name: this._name, link: this._link });
     });
   }
 
-  _handleLikeBtn() {
+  updateLikeBtn(isLiked) {
     // Toggle like button state
-    this._likeBtn.classList.toggle("card__like-button-active");
-  }
-
-  _handleTrashBtn() {
-    // Remove card from the DOM
-    this._cardElement.remove();
-    this._cardElement = null;
+    if (isLiked === false) {
+      this._likeBtn.classList.remove("card__like-button-active");
+    } else {
+      this._likeBtn.classList.add("card__like-button-active");
+    }
+    this._isLiked = isLiked;
   }
 
   getView() {
@@ -48,6 +66,10 @@ export default class Card {
     this._cardImageEL.src = this._link;
     this._cardImageEL.alt = this._name;
     this._cardTitleEL.textContent = this._name;
+
+    if (this._isLiked === true) {
+      this._likeBtn.classList.add("card__like-button-active");
+    }
 
     return this._cardElement;
   }
