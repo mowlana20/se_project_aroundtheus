@@ -198,7 +198,7 @@
           type="button"
           aria-label="modal close button"
         ></button>
-        <form class="modal__form">
+        <form class="modal__form" id="modal__delete-card-form">
           <p class="modal__heading modal__heading-del">Are you sure?</p>
 
           <button
@@ -227,13 +227,14 @@
         <!-- Form inside the modal for editing profile details -->
         <form
           class="modal__form modal__profile-image"
-          id="modal__profile-image"
+          name="modal__profile-image"
+          id="modal__profile-image-form"
         >
           <div class="modal__lable-container">
             <label class="modal__label">
               <input
-                type="text"
-                name="name"
+                type="url"
+                name="profileImage"
                 id="owner-name"
                 class="modal__input modal__input-name"
                 placeholder="Url"

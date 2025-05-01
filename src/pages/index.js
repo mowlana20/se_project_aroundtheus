@@ -22,6 +22,18 @@ const profileFormElement = document.forms["modal__profile-form"];
 const cardFormElement = document.forms["modal__card-form"];
 const profileFormValidator = new FormValidator(options, profileFormElement);
 const cardFormValidator = new FormValidator(options, cardFormElement);
+
+const deleteCardFormElement = document.forms["modal__delete-card-form"];
+const editProfileFormElement = document.forms["modal__profile-image"];
+const deleteCardFormValidator = new FormValidator(
+  options,
+  deleteCardFormElement
+);
+const editProfileFormValidator = new FormValidator(
+  options,
+  editProfileFormElement
+);
+
 const popupWithImage = new PopupWithImage("#modal_image");
 const userImage = document.querySelector(".profile__image");
 
@@ -96,6 +108,9 @@ profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();
 popupWithImage.setEventListeners();
 
+deleteCardFormValidator.enableValidation();
+editProfileFormValidator.enableValidation();
+
 // Buttons for opening modals
 const profileEditBtn = document.querySelector("#profile__edit-button");
 const addCardButton = document.querySelector("#profile__add-button");
@@ -129,6 +144,7 @@ const popupEditProfile = new PopupWithForm({
         userInfo.setUserInfo({
           name: updatedUserData.name,
           job: updatedUserData.about,
+          avatar: updatedUserData.avatar,
         });
       })
       .catch((err) => {
