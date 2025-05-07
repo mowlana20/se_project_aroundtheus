@@ -4,8 +4,7 @@ import "../pages/index.css";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
-import PopupConfirmDelete from "../components/ConfirmDelete.js";
-import PopupWithProfileImage from "../components/PopupWithProfileImage.js";
+import PopupConfirmDelete from "../components/ConfirmDelete.js"; 
 import Api from "../components/Api.js";
 import UserInfo from "../components/UserInfo.js";
 import { initialCards, options } from "../utils/constants";
@@ -38,9 +37,9 @@ const popupWithImage = new PopupWithImage("#modal_image");
 const userImage = document.querySelector(".profile__image");
 
 // Initialize the profile image modal
-const popupUpdateProfileImage = new PopupWithProfileImage({
+const popupUpdateProfileImage = new PopupWithForm({
   popupSelector: "#modal_profile-image",
-  imageSelector: ".profile__image-container",
+  // imageSelector: ".profile__image-container",
   handleFormSubmit: (formData) => {
     return api
       .updatingProfile({ profileImage: formData.profileImage })
@@ -53,7 +52,11 @@ const popupUpdateProfileImage = new PopupWithProfileImage({
   },
 });
 
-popupUpdateProfileImage._setClickListener();
+document
+  .querySelector(".profile__image-container")
+  .addEventListener("click", () => popupUpdateProfileImage.open());
+
+// popupUpdateProfileImage._setClickListener();
 
 const popupConfirmDeletes = new PopupConfirmDelete({
   popupSelector: "#modal_delete-card",
