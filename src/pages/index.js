@@ -4,6 +4,8 @@ import "../pages/index.css";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupConfirmDelete from "../components/ConfirmDelete.js"; 
+import Api from "../components/Api.js";
 import UserInfo from "../components/UserInfo.js";
 import { initialCards, options } from "../utils/constants";
 
@@ -11,6 +13,7 @@ import { initialCards, options } from "../utils/constants";
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
   jobSelector: ".profile__job",
+  profileImageSelector: ".profile__image",
 });
 
 // Form elements and validators
@@ -18,12 +21,98 @@ const profileFormElement = document.forms["modal__profile-form"];
 const cardFormElement = document.forms["modal__card-form"];
 const profileFormValidator = new FormValidator(options, profileFormElement);
 const cardFormValidator = new FormValidator(options, cardFormElement);
+
+const deleteCardFormElement = document.forms["modal__delete-card-form"];
+const editProfileFormElement = document.forms["modal__profile-image"];
+const deleteCardFormValidator = new FormValidator(
+  options,
+  deleteCardFormElement
+);
+const editProfileFormValidator = new FormValidator(
+  options,
+  editProfileFormElement
+);
+
 const popupWithImage = new PopupWithImage("#modal_image");
+const userImage = document.querySelector(".profile__image");
+
+// Initialize the profile image modal
+const popupUpdateProfileImage = new PopupWithForm({
+  popupSelector: "#modal_profile-image",
+  // imageSelector: ".profile__image-container",
+  handleFormSubmit: (formData) => {
+    return api
+      .updatingProfile({ profileImage: formData.profileImage })
+      .then((updatedUserData) => {
+        userInfo.setUserInfo(updatedUserData);
+      })
+      .catch((err) => {
+        console.error(`Failed to update profile image: ${err}`);
+      });
+  },
+});
+
+document
+  .querySelector(".profile__image-container")
+  .addEventListener("click", () => popupUpdateProfileImage.open());
+
+// popupUpdateProfileImage._setClickListener();
+
+const popupConfirmDeletes = new PopupConfirmDelete({
+  popupSelector: "#modal_delete-card",
+  handleDeleteSubmit: (card) => {
+    api
+      .deleteCard(card.id)
+      .then(() => {
+        card.element.remove();
+        popupConfirmDeletes.close();
+      })
+      .catch((err) => {
+        console.error(`Failed to delete the card: ${err}`);
+      });
+  },
+}); //??????????????????????????????
+
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "95098c46-93e7-4f0b-a6fc-0aca47be17cd",
+    "Content-Type": "application/json",
+  },
+});
+// uses api to get initial cards
+
+api
+  .getInitialCards()
+  .then((result) => {
+    section.renderItems(result);
+  })
+  .catch((err) => {
+    console.error(err); // log the error to the console
+  });
+
+///////
+
+// Fetch user info and set it on the page
+api
+  .getUserInfo()
+  .then((userData) => {
+    userInfo.setUserInfo({ name: userData.name, job: userData.about, avatar: userData.avatar });
+    userImage.src = userData.avatar;
+  })
+  .catch((err) => {
+    console.error(`Failed to fetch user data: ${err}`);
+  });
+
+////////////////////////
 
 // Enable validation for forms
 profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();
 popupWithImage.setEventListeners();
+
+deleteCardFormValidator.enableValidation();
+editProfileFormValidator.enableValidation();
 
 // Buttons for opening modals
 const profileEditBtn = document.querySelector("#profile__edit-button");
@@ -52,31 +141,68 @@ function createCardObject() {
 const popupEditProfile = new PopupWithForm({
   popupSelector: "#modal_one",
   handleFormSubmit: (formData) => {
-    userInfo.setUserInfo(formData);
-    popupEditProfile.close();
-    popupEditProfile.formElement.reset();
+    return api
+      .updateUserInfo({ userName: formData.name, about: formData.job })
+      .then((updatedUserData) => {
+        userInfo.setUserInfo({
+          name: updatedUserData.name,
+          job: updatedUserData.about,
+          avatar: updatedUserData.avatar,
+        });
+      })
+      .catch((err) => {
+        console.error(`Failed to update user data: ${err}`);
+      });
   },
 });
 
-// Popup for adding new cards
+
+
 const popupAddCard = new PopupWithForm({
   popupSelector: "#modal_adding-cards",
   handleFormSubmit: (formData) => {
-    const cardData = { name: formData.title, link: formData.url };
-    renderCard(cardData);
-    cardFormValidator.disableBtn();
-    popupAddCard.close();
-    popupAddCard.formElement.reset();
+    return api
+      .addNewCard({ locationName: formData.title, link: formData.url })
+      .then((newCardData) => {
+        renderCard(newCardData); // Add the newly created card to the UI
+        cardFormValidator.disableBtn();
+      })
+      .catch((err) => {
+        console.error(`Failed to add a new card: ${err}`);
+      });
   },
 });
 
+function handleLikeClick(cardData, card) {
+  if (cardData.isLiked === false) {
+    api.likeCard(cardData._id).then((newCardData) => {
+      card.updateLikeBtn(newCardData.isLiked);
+    }).catch((err) => {
+      console.error(`Failed to add a new card: ${err}`);
+    });
+  } else {
+    api.unlikeCard(cardData._id).then((newCardData) => {
+      card.updateLikeBtn(newCardData.isLiked);
+    }).catch((err) => {
+      console.error(`Failed to add a new card: ${err}`);
+    });
+  }
+}
+
 // Create and return a new card element
 function createCard(item) {
-  const cardElement = new Card(item, handleImageClick, "#card-template");
+  const cardElement = new Card(
+    item,
+    handleImageClick,
+    "#card-template",
+    handleDeleteClick,
+    handleLikeClick
+  );
   return cardElement.getView();
 }
 
-// Event listener for profile edit button
+
+
 profileEditBtn.addEventListener("click", () => {
   const userData = userInfo.getUserInfo();
   profileNameInput.value = userData.name;
@@ -91,11 +217,11 @@ function renderCard(item) {
 }
 
 // Initialize Section class to manage card rendering
-const section = new Section(
-  { items: initialCards, renderer: renderCard },
-  ".cards__list"
-);
-section.renderItems();
+const section = new Section({ renderer: renderCard }, ".cards__list");
 
 // Event listener for add card button
 addCardButton.addEventListener("click", () => popupAddCard.open());
+
+function handleDeleteClick(card) {
+  popupConfirmDeletes.open(card);
+}
