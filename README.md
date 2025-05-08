@@ -30,6 +30,8 @@ we used different technologies like flex grid and flex box to make his project.
 
 - [Link to the project vedio on youtube](https://youtu.be/4Gy2_Aomqng)
 
+- [Link to updated the project demo on youtube](https://youtu.be/9QdRhCJRoZU)
+
 **Images**
 
 The way you'll do this at work is by exporting images directly from Figma — we recommend doing that to practice more. Don't forget to optimize them [here](https://tinypng.com/), so your project loads faster.
