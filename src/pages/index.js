@@ -97,7 +97,7 @@ api
 api
   .getUserInfo()
   .then((userData) => {
-    userInfo.setUserInfo({ name: userData.name, job: userData.about });
+    userInfo.setUserInfo({ name: userData.name, job: userData.about, avatar: userData.avatar });
     userImage.src = userData.avatar;
   })
   .catch((err) => {
@@ -156,17 +156,7 @@ const popupEditProfile = new PopupWithForm({
   },
 });
 
-// Popup for adding new cards old
-// const popupAddCard = new PopupWithForm({
-//   popupSelector: "#modal_adding-cards",
-//   handleFormSubmit: (formData) => {
-//     const cardData = { name: formData.title, link: formData.url };
-//     renderCard(cardData);
-//     cardFormValidator.disableBtn();
-//     popupAddCard.close();
-//     popupAddCard.formElement.reset();
-//   },
-// });
+
 
 const popupAddCard = new PopupWithForm({
   popupSelector: "#modal_adding-cards",
@@ -187,10 +177,14 @@ function handleLikeClick(cardData, card) {
   if (cardData.isLiked === false) {
     api.likeCard(cardData._id).then((newCardData) => {
       card.updateLikeBtn(newCardData.isLiked);
+    }).catch((err) => {
+      console.error(`Failed to add a new card: ${err}`);
     });
   } else {
     api.unlikeCard(cardData._id).then((newCardData) => {
       card.updateLikeBtn(newCardData.isLiked);
+    }).catch((err) => {
+      console.error(`Failed to add a new card: ${err}`);
     });
   }
 }
@@ -207,25 +201,13 @@ function createCard(item) {
   return cardElement.getView();
 }
 
-// Event listener for profile edit button old code
-// profileEditBtn.addEventListener("click", () => {
-//   const userData = userInfo.getUserInfo();
-//   profileNameInput.value = userData.name;
-//   profileJobInput.value = userData.job;
-//   popupEditProfile.open();
-// });
+
 
 profileEditBtn.addEventListener("click", () => {
-  api
-    .getUserInfo()
-    .then((userData) => {
-      profileNameInput.value = userData.name;
-      profileJobInput.value = userData.about;
-      popupEditProfile.open();
-    })
-    .catch((err) => {
-      console.error(`Failed to load user data for editing: ${err}`);
-    });
+  const userData = userInfo.getUserInfo();
+  profileNameInput.value = userData.name;
+  profileJobInput.value = userData.job;
+  popupEditProfile.open();
 });
 
 // Render cards on the page using Section class

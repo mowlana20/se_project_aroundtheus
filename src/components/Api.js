@@ -6,7 +6,7 @@ export default class Api {
   }
 
   // Helper method to check the response from the server
-  _cheackingResponse(res) {
+  _checkResponse(res) {
     if (res.ok) {
       return res.json();
     }
@@ -14,15 +14,13 @@ export default class Api {
   }
 
   // General method to make HTTP requests
-  _request(endpoint, options) {
+  _request(endpoint, options = {}) {
     return fetch(`${this.baseUrl}${endpoint}`, {
-      ...options,
-      headers: this.headers,
+       headers: this.headers,
+       ...options,
+     
     })
-      .then(this._cheackingResponse)
-      .catch((err) => {
-        console.error(err); // Log any errors
-      });
+      .then(this._checkResponse);
   }
 
   // Get the initial set of cards from the server
